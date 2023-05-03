@@ -5,8 +5,8 @@ body{
 }
 
 img{
-    width: 80px;
-    height: 80px;
+    width: 100px;
+    height: 100px;
     margin-right: 50px;
 }
 
@@ -17,6 +17,15 @@ h1{
     padding: 20px;
     margin-bottom: 0px;
     border-bottom: 1px solid #004203;
+    text-align: center;
+    font-size: 60px;
+}
+h5{
+    background: #1a9701;
+    margin-top: 0;
+    color: white;
+    padding-top: 20px;
+    margin-bottom: 0px;
     text-align: center;
     font-size: 60px;
 }
@@ -98,7 +107,7 @@ table tbody{
     height: 450px;
     width: 850px;
     margin-left: 515px;
-    margin-top: 70px;
+    margin-top: 125px;
 
 }
 
@@ -106,77 +115,77 @@ table tbody{
     height: 450px;
     width: 850px;
     margin-left: 515px;
-    margin-top: 100px;
+    margin-top: 215px;
 }
 
 #março{
     height: 450px;
     width: 850px;
     margin-left: 515px;
-    margin-top: 100px;
+    margin-top: 200px;
 }
 
 #abril{
     height: 450px;
     width: 850px;
     margin-left: 515px;
-    margin-top: 100px;
+    margin-top: 200px;
 }
 
 #maio{
     height: 450px;
     width: 850px;
     margin-left: 515px;
-    margin-top: 100px;
+    margin-top: 200px;
 }
 
 #junho{
     height: 450px;
     width: 850px;
     margin-left: 515px;
-    margin-top: 100px;
+    margin-top: 210px;
 }
 
 #julho{
     height: 450px;
     width: 850px;
     margin-left: 515px;
-    margin-top: 100px;
+    margin-top: 210px;
 }
 
 #agosto{
     height: 450px;
     width: 850px;
     margin-left: 515px;
-    margin-top: 100px;
+    margin-top: 190px;
 }
 
 #setembro{
     height: 450px;
     width: 850px;
     margin-left: 515px;
-    margin-top: 100px;
+    margin-top: 210px;
 }
 
 #outubro{
     height: 450px;
     width: 850px;
     margin-left: 515px;
-    margin-top: 100px;
+    margin-top: 200px;
 }
 
 #novembro{
     height: 450px;
     width: 850px;
     margin-left: 515px;
-    margin-top: 100px;
+    margin-top: 210px;
 }
 
 #dezembro{
     height: 450px;
     width: 850px;
     margin-left: 515px;
-    margin-top: 100px;
+    margin-top: 190px;
 }
 
 .feriado{
