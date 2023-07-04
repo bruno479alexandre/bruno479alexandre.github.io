@@ -1,22 +1,48 @@
-var slideIndex = 1;
-showSlides(slideIndex);
+function getAgent() {
+	fetch('https://valorant-api.com/v1/agents')
+		.then(response => response.json())
+		.then(data => {
+			const agentContainer = document.querySelector('.agent-container');
+			agentContainer.innerHTML = '';
 
-function plusSlides(n) {
-    showSlides(slideIndex += n);
+			const randomIndex = Math.floor(Math.random() * data.data.length);
+			const agent = data.data[randomIndex];
+
+			const agentCard = document.createElement('div');
+			agentCard.classList.add('agent-card');
+
+			const agentName = document.createElement('h2');
+			agentName.textContent = agent.displayName;
+
+			const agentImage = document.createElement('img');
+			agentImage.src = agent.fullPortrait;
+
+			agentCard.appendChild(agentName);
+			agentCard.appendChild(agentImage);
+
+			agentContainer.appendChild(agentCard);
+		});
 }
 
+const btn = document.querySelector('#btn');
+const armaDiv = document.querySelector('#arma');
 
-function showSlides(n) {
-    var i;
-    var slides = document.getElementsByTagName("img");
-    var texts = document.getElementsByTagName("p");
-    if (n > slides.length) { slideIndex = 1 }
-    if (n < 1) { slideIndex = slides.length }
-    for (i = 0; i < slides.length; i++) {
-        slides[i].classList.remove("active");
-        texts[i].classList.remove("active");
-    }
-    slides[slideIndex - 1].classList.add("active");
-    texts[slideIndex - 1].classList.add("active");
-}
+btn.addEventListener('click', () => {
+	fetch('https://valorant-api.com/v1/weapons')
+		.then(response => response.json())
+		.then(data => {
+			const randomIndex = Math.floor(Math.random() * data.data.length);
+			const weapon = data.data[randomIndex];
 
+			const img = document.createElement('img');
+			img.src = weapon.displayIcon;
+			img.alt = weapon.displayName;
+
+			const name = document.createElement('p');
+			name.textContent = weapon.displayName;
+
+			armaDiv.innerHTML = '';
+			armaDiv.appendChild(name);
+			armaDiv.appendChild(img);
+		});
+});
