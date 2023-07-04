@@ -1,0 +1,40 @@
+html {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    margin: 0px;
+}
+
+body {
+    background-image: url(https://th.bing.com/th/id/R.b9c245c16f3bc59e7ab0584961f4f3e6?rik=rgm9ArGKMjvX6g&pid=ImgRaw&r=0);
+    float: center;
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+    margin: 0px;
+    color: white;
+}
+
+.home {
+
+    width: 200px;
+    height: 150px;
+
+}
+
+.quadrado {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+button {
+    background-color: red;
+    color: white;
+    justify-content: center;
+    height: 100px;
+    width: 225px;
+    font-size: 35px;
+}
