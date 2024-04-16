@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Vendas</title>
+    <style>
+        /* Estilos para a tabela */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Registro de Vendas</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Data</th>
+                <th>Quantidade</th>
+                <th>Serviço</th>
+                <th>Valor</th>
+                <th>Forma de Pagamento</th>
+                <th>Vendedor</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Exemplo de dados -->
+            <tr>
+                <td>2024-04-15</td>
+                <td>3</td>
+                <td>Consultoria</td>
+                <td>R$ 150,00</td>
+                <td>Cartão</td>
+                <td>João</td>
+            </tr>
+            <tr>
+                <td>2024-04-15</td>
+                <td>1</td>
+                <td>Manutenção</td>
+                <td>R$ 80,00</td>
+                <td>Dinheiro</td>
+                <td>Maria</td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <th colspan="4">Total</th>
+                <td colspan="2" id="total">R$ 0,00</td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <!-- Script para calcular o valor total -->
+    <script>
+        const valorTotal = document.getElementById('total');
+        const valores = document.querySelectorAll('tbody td:nth-child(4)');
+
+        let total = 0;
+        valores.forEach((valor) => {
+            total += parseFloat(valor.innerText.replace('R$ ', '').replace(',', '.'));
+        });
+
+        valorTotal.innerText = `R$ ${total.toFixed(2)}`;
+    </script>
+
+    <!-- Botão para download da tabela -->
+    <a href="#" download="registro_vendas.csv">Baixar Tabela</a>
+</body>
+</html>
