@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minha Tabela</title>
+    <style>
+        /* Estilos CSS para a tabela */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <table id="minhaTabela">
+        <thead>
+            <tr>
+                <th>Quantidade</th>
+                <th>Serviço</th>
+                <th>Valor</th>
+                <th>Forma de Pagamento</th>
+                <th>Vendedor</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Linhas da tabela serão adicionadas dinamicamente via JavaScript -->
+        </tbody>
+    </table>
+
+    <button onclick="adicionarLinha()">Adicionar Linha</button>
+    <button onclick="calcularTotal()">Calcular Total</button>
+    <button onclick="exportarTabela()">Exportar Tabela</button>
+
+    <script>
+    // Variável global para armazenar a referência à linha do total
+let linhaTotal = null;
+
+// Função para adicionar uma nova linha à tabela
+function adicionarLinha() {
+    const tabela = document.getElementById("minhaTabela");
+
+    // Move a linha do total para o final da tabela, se ela existir
+    if (linhaTotal !== null) {
+        tabela.deleteRow(linhaTotal.rowIndex);
+        tabela.appendChild(linhaTotal);
+    }
+
+    const novaLinha = tabela.insertRow();
+
+    // Adiciona células editáveis para as outras colunas
+    for (let i = 0; i < 5; i++) {
+        const celula = novaLinha.insertCell(i);
+        if (i !== 3 && i !== 4) { // Pula a célula de forma de pagamento e vendedor
+            celula.contentEditable = "true";
+        } else if (i === 3) {
+            celula.innerHTML = `
+                <select>
+                    <option value="">Escolha a forma de pagamento</option>
+                    <option value="Dinheiro">Dinheiro</option>
+                    <option value="Debito">Débito</option>
+                    <option value="Credito">Crédito</option>
+                    <option value="Pix">Pix</option>
+                </select>
+            `;
+        } else if (i === 4) {
+            celula.innerHTML = `
+                <select>
+                    <option value="">Escolha o vendedor</option>
+                    <option value="Bruno">Bruno</option>
+                    <option value="Jonas">Jonas</option>
+                </select>
+            `;
+        }
+    }
+
+    // Move a linha do total para o final da tabela novamente
+    if (linhaTotal !== null) {
+        tabela.appendChild(linhaTotal);
+    }
+}
+
+
+// Função para calcular o valor total
+function calcularTotal() {
+    const tabela = document.getElementById("minhaTabela");
+    const linhas = tabela.getElementsByTagName("tr");
+    let total = 0;
+
+    // Remove a linha do total, se ela existir
+    if (linhaTotal !== null) {
+        tabela.deleteRow(linhaTotal.rowIndex);
+        linhaTotal = null;
+    }
+
+    // Calcula o total
+    for (let i = 1; i < linhas.length; i++) {
+        const valorCelula = parseFloat(linhas[i].cells[2].textContent);
+        if (!isNaN(valorCelula)) {
+            total += valorCelula;
+        }
+    }
+
+    // Cria uma nova linha do total
+    linhaTotal = tabela.insertRow();
+    const celulaTotal = linhaTotal.insertCell(0);
+    celulaTotal.colSpan = "5"; // Faz a célula ocupar 5 colunas
+    celulaTotal.textContent = "Total: " + total.toFixed(2);
+}
+
+function exportarTabela() {
+    // Pega a tabela original
+    const tabelaOriginal = document.getElementById("minhaTabela");
+
+    // Cria uma nova tabela
+    const tabela = document.createElement("table");
+    tabela.id = "minhaTabela";
+
+    // Adiciona a data da exportação no topo da tabela
+    const linhaData = tabela.insertRow();
+    const celulaData = linhaData.insertCell();
+    celulaData.colSpan = "5"; // Faz a célula ocupar 5 colunas
+
+    // Pega a data atual
+    const dataAtual = new Date();
+    const dia = String(dataAtual.getDate()).padStart(2, '0');
+    const mes = String(dataAtual.getMonth() + 1).padStart(2, '0'); // Janeiro é 0!
+    const ano = dataAtual.getFullYear();
+
+    const dataFormatada = dia + '/' + mes + '/' + ano;
+    celulaData.textContent = "Data da Exportacao: " + dataFormatada;
+
+    // Preenche a nova tabela com os valores da tabela original
+    for (let i = 0; i < tabelaOriginal.rows.length; i++) {
+        const novaLinha = tabela.insertRow();
+        for (let j = 0; j < tabelaOriginal.rows[i].cells.length; j++) {
+            const novaCelula = novaLinha.insertCell();
+            const celulaOriginal = tabelaOriginal.rows[i].cells[j];
+            if (celulaOriginal.children.length > 0 && celulaOriginal.children[0].tagName === "SELECT") {
+                novaCelula.textContent = celulaOriginal.children[0].value;
+            } else {
+                novaCelula.textContent = celulaOriginal.textContent;
+            }
+        }
+    }
+
+    // Cria o HTML para exportação
+    let data = '<html>\n<head>\n<title>Minha Tabela - ' + dataFormatada + '</title>\n' +
+        '<style>\n' +
+        'table { width: 100%; border-collapse: collapse; }\n' +
+        'th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }\n' +
+        'th { background-color: #f2f2f2; }\n' +
+        '</style>\n' +
+        '</head>\n<body>\n' + tabela.outerHTML + '\n</body>\n</html>';
+
+    let encodedUri = 'data:text/html;charset=utf-8,' + encodeURIComponent(data);
+    let link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "VENDAS_" + dataFormatada + ".html");
+    document.body.appendChild(link); // Necessário para o Firefox
+
+    link.click(); // Isso fará o download do arquivo de dados chamado "minha_tabela_dd_mm_yyyy.html".
+}
+
+    </script>
+</body>
+</html>
